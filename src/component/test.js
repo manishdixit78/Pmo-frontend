@@ -19,7 +19,7 @@ ChartJs.register(
 
 const BarChart = (props) => {
     const { selectedBar, setSelectedBar } = props;
-  const labels = ["January", "February", "March", "April", "May", "June"];
+  const labels = ["Jan", "Feb", "Mar"];
   const data = {
     labels: labels,
     datasets: [
@@ -82,16 +82,21 @@ const BarChart = (props) => {
     // categoryPercentage: -0.9, // set the width of each category of bars
     scales: {
       x: {
-        display: false,
+        border: {
+          display: false
+        },
+        grid: {
+          display: false,
+        },
       },
       y: {
         display: false,
-      },
+      }
     },
   };
 
   return (
-    <div style={{ width: "170px" }}>
+    <div style={{ width: "100px" }}>
       <Bar data={data} options={options} />
     </div>
   );
