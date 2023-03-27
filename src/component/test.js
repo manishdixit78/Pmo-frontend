@@ -18,8 +18,8 @@ ChartJs.register(
 );
 
 const BarChart = (props) => {
-    const { selectedBar, setSelectedBar } = props;
-  const labels = ["January", "February", "March", "April", "May", "June"];
+  const { selectedBar, setSelectedBar } = props;
+  const labels = ["200", "100", "300"];
   const data = {
     labels: labels,
     datasets: [
@@ -30,7 +30,7 @@ const BarChart = (props) => {
           "#EA111E",
         ],
         borderColor: "rgb(255, 99, 132)",
-        data: [300, 50, 100],
+        data: [900, 500, 600],
         showTooltips: false,
       },
     ],
@@ -46,7 +46,6 @@ const BarChart = (props) => {
       },
     },
     onClick: (evt, item) => {
-        console.log('data->>>>>', evt, item)
       if (item.length > 0) {
         const index = item[0].index;
         if(index === 0){
@@ -82,7 +81,12 @@ const BarChart = (props) => {
     // categoryPercentage: -0.9, // set the width of each category of bars
     scales: {
       x: {
-        display: false,
+        border: {
+          display: false
+        },
+        grid: {
+          display: false,
+        }
       },
       y: {
         display: false,
@@ -91,7 +95,7 @@ const BarChart = (props) => {
   };
 
   return (
-    <div style={{ width: "170px" }}>
+    <div style={{ width: "100px" }}>
       <Bar data={data} options={options} />
     </div>
   );

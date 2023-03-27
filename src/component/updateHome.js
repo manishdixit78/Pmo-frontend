@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
+import { useDownloadExcel } from 'react-export-table-to-excel';
 import { styled } from '@mui/material/styles';
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -56,6 +57,7 @@ export default function Home() {
         orange: false,
         red: false
     });
+  const [exportData, setExportData] = useState(null);
   const [searchData, setSearchData] = useState('');
   console.log('searchData : ', searchData)
     const data = [
@@ -63,7 +65,19 @@ export default function Home() {
         { title: 'BUSINESS UNIT', total: 200, active: 50, key1: 'Total Business Unit', key2: 'Active Business' },
         { title: 'PROJECTS', total: 300, active: 50, key1: 'Total Projects', key2: 'Active Projects' },
         { title: 'EMPLOYEES', total: 200, active: 10, key1: 'Total Employee', key2: 'Active Employees' }
-    ]
+    ];
+
+    function CallBack (childData){
+        setExportData(childData);
+        console.log('childData->>>>>>>', childData);
+    }
+
+    const {onDownload} = useDownloadExcel({
+      currentTableRef: exportData?.current,
+      filename: 'Table_Data',
+      sheet: 'TableData'
+  
+    })
 
     const handleSearch =(e)=>{
         setSearchData(e.target.value);
@@ -82,6 +96,12 @@ export default function Home() {
             employees: false,
             [title.toLowerCase()]: true
         })
+        // setSelectedBar({
+        //     green: false,
+        //     orange: false,
+        //     red: false
+        // })
+
     };
 
     const getTableHeader = (cardData)=> {
@@ -112,7 +132,7 @@ export default function Home() {
        }
     };
 
-    console.log('data->>>>>98', selectedBar);
+    console.log('tableref->>>>561', exportData);
     return (
         <>
         <div className={classes.root}>
@@ -297,7 +317,7 @@ export default function Home() {
             </Grid>
         </div>
         <br />
-        <BasicSelect />
+        <BasicSelect onDownload={onDownload}/>
         {(cardSelect || cardData.company) && (
         <Paper sx={{ ml:1, width: '98%'}} elevation={3}>
         <Grid
@@ -326,7 +346,7 @@ export default function Home() {
                <ProjectTable />
            )}
            { (cardData.employees) && (
-           <EmployeeTable selectedBar={selectedBar}/>
+           <EmployeeTable selectedBar={selectedBar} handleCallback={CallBack}/>
               )}
            {/* { (cardData.employees && selectedBar.green) ? (
            <EmployeeTable />

@@ -9,14 +9,15 @@ import DownloadIcon from '@mui/icons-material/Download';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 
+
 const buMock=['PHP JS','Node','HR'];
 const projectMock= ['Dentsu', 'PMO', 'Marketcube'];
-export default function BasicSelect() {
+export default function BasicSelect(props) {
+  const { onDownload } = props;
   const [filter, setFilter] = useState({
      bu: [],
      project: []
   });
-
 
   const handleChange = (event,key) => {
     setFilter({
@@ -32,7 +33,7 @@ export default function BasicSelect() {
     // justifyContent='space-between'
     flexGrow= '1'
     >
-      <Button variant="success" sx={{ mt:2, ml:2, mb:3}}><DownloadIcon />Export Report</Button>
+      <Button variant="success" sx={{ mt:2, ml:2, mb:3}} onClick={onDownload}><DownloadIcon />Export Report</Button>
       <FormControl sx={{ m: 1,ml:'53%', mt:2, mb:3, width: '15%' }}>
         <InputLabel id="demo-simple-select-label">Select Bu</InputLabel>
         <Select
