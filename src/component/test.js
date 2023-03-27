@@ -18,8 +18,8 @@ ChartJs.register(
 );
 
 const BarChart = (props) => {
-  const { selectedBar, setSelectedBar } = props;
-  const labels = ["200", "100", "300"];
+    const { selectedBar, setSelectedBar } = props;
+  const labels = ["Jan", "Feb", "Mar"];
   const data = {
     labels: labels,
     datasets: [
@@ -86,11 +86,11 @@ const BarChart = (props) => {
         },
         grid: {
           display: false,
-        }
+        },
       },
       y: {
         display: false,
-      },
+      }
     },
   };
 
