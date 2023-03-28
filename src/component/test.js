@@ -73,7 +73,7 @@ const BarChart = (props) => {
 
         // })
         // perform the action you want here, for example:
-        console.log(`You clicked on dataset at index ${index}`);
+        // console.log(`You clicked on dataset at index ${index}`);
       }
     },
     barThickness: 15,

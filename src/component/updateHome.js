@@ -59,7 +59,7 @@ export default function Home() {
     });
   const [exportData, setExportData] = useState(null);
   const [searchData, setSearchData] = useState('');
-  console.log('searchData : ', searchData)
+//   console.log('searchData : ', searchData)
     const data = [
         { title: 'COMPANY', total: 500, active: 30, key1: 'Total Employee', key2: 'Active Resources' },
         { title: 'BUSINESS UNIT', total: 200, active: 50, key1: 'Total Business Unit', key2: 'Active Business' },
@@ -69,7 +69,7 @@ export default function Home() {
 
     function CallBack (childData){
         setExportData(childData);
-        console.log('childData->>>>>>>', childData);
+        // console.log('childData->>>>>>>', childData);
     }
 
     const {onDownload} = useDownloadExcel({
@@ -132,7 +132,7 @@ export default function Home() {
        }
     };
 
-    console.log('tableref->>>>561', exportData);
+    // console.log('tableref->>>>561', exportData);
     return (
         <>
         <div className={classes.root}>
@@ -317,7 +317,9 @@ export default function Home() {
             </Grid>
         </div>
         <br />
+        { (cardData.employees) && (
         <BasicSelect onDownload={onDownload}/>
+        )}
         {(cardSelect || cardData.company) && (
         <Paper sx={{ ml:1, width: '98%'}} elevation={3}>
         <Grid

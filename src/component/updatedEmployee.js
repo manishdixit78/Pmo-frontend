@@ -1,7 +1,6 @@
-import * as React from "react";
-// import { useState, useEffect } from 'react'
+// import * as React from "react";
+import React, { useState, useEffect } from 'react'
 import axios from "axios";
-import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -19,7 +18,6 @@ import CardHeader from "@mui/material/CardHeader";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import TablePagination from "@mui/material/TablePagination";
-import { Button } from "@mui/material";
 
 function createData(
   deptName,
@@ -134,6 +132,7 @@ const rows = [
 //     createData('Vendor Resources(Delivery)', 'Ravi', 'warning', '10%', '20%', 'HR', 'Noida'),
 //     createData('Vendor Resources(Operations)', 'Santosh', 'warning', '30%', '20%', 'Node', 'Noida'),
 //   ];
+
 
 function createDatarow1(
   deptName,
@@ -360,15 +359,34 @@ const rows1 = [
 ];
 
 function Row(props) {
-  const { row, selectedBar, order, orderBy, handleRequestSort, stableSort, getComparator } = props;
+  const { row, selectedBar, order, orderBy, handleRequestSort, stableSort, getComparator, pg } = props;
   const [open, setOpen] = React.useState(false);
   const [set1, setSet1] = React.useState();
+  const [selectedRow, setSelectedRow] = React.useState(null);
   // console.log("new->>>>>>315", row.empName);
+  useEffect(()=>{
+    setOpen(false);
+  },[pg])
+
   const handleClick = (name) => {
-    setSet1(name);
+    // console.log('data->>>>>>>>374', selectedRow, name);
+    // if (selectedRow === name) {
+    //   console.log("inside ---------------------------373")
+    //   setSelectedRow(null);
+    //   setOpen(false);
+    // } else {
+    //   console.log("inside else---------------------------377")
+    //   setSelectedRow(name);
+    //   setOpen(true);
+    // }
+    // console.log('line 372->>>>>>>>>>>>>', selectedRow, name)
     setOpen(!open);
+    setSet1(name);
+    // setOpen(!open);
   };
-  // console.log('data->>>>>>>>370', order, orderBy)
+
+  console.log('line 372->>>>>>>>>>>>>', selectedRow)
+
   // console.log('rows1->>>>>>>...338', stableSort(rows1, getComparator(order, orderBy)));
   return (
     <React.Fragment>
@@ -377,7 +395,7 @@ function Row(props) {
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={() => handleClick(row.empName)}
+            onClick={(event) => handleClick(row.empName)}
           >
             {open ? (
               <RemoveCircleIcon style={{ color: "2559C3" }} />
@@ -429,6 +447,7 @@ function Row(props) {
                   <TableCell align="right">Monthly RAG Status</TableCell>
                   <TableCell align="right">
                   <TableSortLabel 
+                  // key={row.empName}
                     active={true}
                     direction={orderBy === 'proMonthlyGm' ? order : 'asc'}
                     onClick={() => {handleRequestSort('proMonthlyGm')}}
@@ -444,7 +463,7 @@ function Row(props) {
               <TableBody>
                 {stableSort(rows1, getComparator(order, orderBy)).map(
                   (row) =>
-                    set1 === row.name && (
+                    set1 === row.name ? (
                       <TableRow
                         // key={row.name}
                         sx={{
@@ -471,7 +490,7 @@ function Row(props) {
                         <TableCell align="right">{row.yearlyGm}</TableCell>
                         <TableCell align="right">{row.time}</TableCell>
                       </TableRow>
-                    )
+                    ) : null
                 )}
               </TableBody>
             </Box>
@@ -484,7 +503,6 @@ function Row(props) {
 
 export default function EmployeeTable(props) {
   const { selectedBar, handleCallback } = props;
-  console.log('data->>>>>>487', rows1);
   const [order, setOrder] = React.useState();
   const [orderBy, setOrderBy] = React.useState();
   let aa2 = rows;
@@ -552,7 +570,7 @@ export default function EmployeeTable(props) {
     });
     return stabilizedThis.map((el) => el[0]);
   }
-//  console.log('tableref->>>>561', tableref);
+ 
   return (
     <>
         {/* <Button onClick={onDownload}>Export</Button> */}
@@ -619,6 +637,7 @@ export default function EmployeeTable(props) {
                       handleRequestSort={handleRequestSort}
                       getComparator={getComparator}
                       stableSort={stableSort}
+                      pg={pg}
                     />
                   ))
               : stableSort(rows, getComparator(order, orderBy))
@@ -633,6 +652,7 @@ export default function EmployeeTable(props) {
                       handleRequestSort={handleRequestSort}
                       getComparator={getComparator}
                       stableSort={stableSort}
+                      pg={pg}
                     />
                   ))}
           </TableBody>
