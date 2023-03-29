@@ -45,9 +45,9 @@ export default function BasicSelect(props) {
   //   });
   // };
 
-  const buURL = "https://test.resource-api.writso.com/v1/departments";
+  const buURL = "https://dev.resource-api.writso.com/v1/departments";
 
-  const projectURL = "https://test.resource-api.writso.com/v1/projects";
+  const projectURL = "https://dev.resource-api.writso.com/v1/projects";
   
   let tokenStr = "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk3OWVkMTU1OTdhYjM1Zjc4MjljZTc0NDMwN2I3OTNiN2ViZWIyZjAiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiTWFuaXNoIERpeGl0IiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FHTm15eGFNdld5bnlPSzc1VWJ6WVNzODlpODRfenB4Ykk5TkpLQzhSUXBUPXM5Ni1jIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3Jlc291cmNlLWF2YWlhYmlsaXR5IiwiYXVkIjoicmVzb3VyY2UtYXZhaWFiaWxpdHkiLCJhdXRoX3RpbWUiOjE2Nzk5OTU0MTUsInVzZXJfaWQiOiJMQ1k0UkVkRlhTWkYzTjlEbzlBQnFhMmo0S0IyIiwic3ViIjoiTENZNFJFZEZYU1pGM045RG85QUJxYTJqNEtCMiIsImlhdCI6MTY3OTk5NTQxNSwiZXhwIjoxNjc5OTk5MDE1LCJlbWFpbCI6Im1hbmlzaC5kaXhpdEBzdWNjZXNzaXZlLnRlY2giLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjExODM5NzE5ODMxNTY2OTY2OTUwNyJdLCJlbWFpbCI6WyJtYW5pc2guZGl4aXRAc3VjY2Vzc2l2ZS50ZWNoIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9fQ.X_ZY7TUkAkYb9vubIbQpkHq0GZEw6FAIqxeaLJ1O2Za8f-R3FLEXNTc1932bU3uLVOQJoHmXoZ-tP_FvQUSElLiTsnvU-TtqCaEzjR9p3yDm7xLNxoHKX0YPCZsv8c_wNmfJXfCbuAYnsAAVnYqiVwi3CZ4DwlF-BwzCc_DMvSUpas9BR4yxWPmqEQuATcI4HA18ZvAf6eShJKBrknJ2-8k_HrMgOT1HY0zpghjtfxUMO9Hz0s5tfg-KMug7GD5zZ1dPND9yT5WjKxCC5LOHL4yi_ZE7ojwNrSg00JNU86DIJSwIlL-SEb-wgYkwT4PyV3PBQFZF1pNemrT2bUe1ZA"
   useEffect(() => {

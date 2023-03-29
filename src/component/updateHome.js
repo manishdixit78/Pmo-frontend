@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from "axios";
 import { useDownloadExcel } from 'react-export-table-to-excel';
 import { styled } from '@mui/material/styles';
 import { makeStyles } from '@material-ui/core/styles'
@@ -10,7 +9,6 @@ import {
     CardContent,
     Typography,
     TextField,
-    CardHeader,
 } from '@material-ui/core/'
 import { CardActionArea } from '@mui/material';
 import CollapsibleTable from './companyTable';
@@ -43,7 +41,6 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Home() {
     const classes = useStyles()
-    const [apiData, setApiData] = useState();
     const [cardSelect, setCardSelect] = useState(false);
     const [selectedCard, setSelectedCard] = useState();
     const [cardData, setCardData] = useState({
@@ -59,7 +56,6 @@ export default function Home() {
     });
   const [exportData, setExportData] = useState(null);
   const [searchData, setSearchData] = useState('');
-//   console.log('searchData : ', searchData)
     const data = [
         { title: 'COMPANY', total: 500, active: 30, key1: 'Total Employee', key2: 'Active Resources' },
         { title: 'BUSINESS UNIT', total: 200, active: 50, key1: 'Total Business Unit', key2: 'Active Business' },
@@ -69,7 +65,6 @@ export default function Home() {
 
     function CallBack (childData){
         setExportData(childData);
-        // console.log('childData->>>>>>>', childData);
     }
 
     const {onDownload} = useDownloadExcel({
@@ -96,12 +91,6 @@ export default function Home() {
             employees: false,
             [title.toLowerCase()]: true
         })
-        // setSelectedBar({
-        //     green: false,
-        //     orange: false,
-        //     red: false
-        // })
-
     };
 
     const getTableHeader = (cardData)=> {
@@ -132,7 +121,6 @@ export default function Home() {
        }
     };
 
-    // console.log('tableref->>>>561', exportData);
     return (
         <>
         <div className={classes.root}>

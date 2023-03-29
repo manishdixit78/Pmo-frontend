@@ -1,4 +1,3 @@
-// import * as React from "react";
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
 import Box from "@mui/material/Box";
@@ -27,7 +26,8 @@ function createData(
   monthlyGm,
   yearlyGm,
   empDept,
-  empLocation
+  empLocation,
+  user_org_booking,
 ) {
   return {
     uuid,
@@ -37,382 +37,30 @@ function createData(
     yearlyGm,
     empDept,
     empLocation,
-    history: [
-      {
-        date: "2020-01-05",
-        customerId: "11091700",
-        amount: 3,
-      },
-      {
-        date: "2020-01-02",
-        customerId: "Anonymous",
-        amount: 1,
-      },
-    ],
+    user_org_booking
   };
 }
-
-const rows = [
-  createData(
-    '1',
-    "Delivery Resources",
-    "Aman",
-    "green",
-    "30%",
-    "10%",
-    "PHP Js",
-    "Pune"
-  ),
-  // createData(
-  //   "Delivery Resources",
-  //   "Test2",
-  //   "green",
-  //   "30%",
-  //   "10%",
-  //   "PHP Js",
-  //   "Pune"
-  // ),
-  createData(
-    "2",
-    "Operation Resources",
-    "Rajat",
-    "red",
-    "50%",
-    "30%",
-    "Node",
-    "Noida"
-  ),
-  createData(
-    "3",
-    "Vendor Resources(Delivery)",
-    "Satish",
-    "Darkorange",
-    "10%",
-    "20%",
-    "HR",
-    "Noida"
-  ),
-  createData(
-    "4",
-    "Vendor Resources(Delivery)",
-    "Test",
-    "Darkorange",
-    "10%",
-    "20%",
-    "HR",
-    "Noida"
-  ),
-  // createData(
-  //   "Vendor Resources(Operations)",
-  //   "Mohit",
-  //   "red",
-  //   "60%",
-  //   "40%",
-  //   "Node",
-  //   "Pune"
-  // ),
-  // createData(
-  //   "Vendor Resources(Operations)",
-  //   "Amit",
-  //   "orange",
-  //   "11%",
-  //   "55%",
-  //   "R&D",
-  //   "Noida"
-  // ),
-  createData(
-    "5",
-    "Vendor Resources(Operations)",
-    "ABC",
-    "green",
-    "16%",
-    "59%",
-    "R&D",
-    "Noida"
-  )
-];
-
-// const rows2 = [
-//     createData('Delivery Resources', 'Prince', 'warning', '40%', '20%', 'PHP Js', 'Noida'),
-//     createData('Operation Resources', 'Vinay', 'warning', '10%', '30%', 'Node', 'Pune'),
-//     createData('Vendor Resources(Delivery)', 'Ravi', 'warning', '10%', '20%', 'HR', 'Noida'),
-//     createData('Vendor Resources(Operations)', 'Santosh', 'warning', '30%', '20%', 'Node', 'Noida'),
-//   ];
-
-function projectCreateDatarow(
-  name,
-  projName,
-  projType,
-  billingType,
-  mrs,
-  proMonthlyGm,
-  yearlyGm,
-  time
-) {
-  return {
-  name,
-  projName,
-  projType,
-  billingType,
-  mrs,
-  proMonthlyGm,
-  yearlyGm,
-  time
-  };
-}
-
-function createDatarow1(
-  deptName,
-  name,
-  employeeId,
-  email,
-  location,
-  manager,
-  date,
-  projName,
-  projType,
-  billingType,
-  mrs,
-  proMonthlyGm,
-  yearlyGm,
-  time
-) {
-  return {
-    deptName,
-    name,
-    employeeId,
-    email,
-    location,
-    manager,
-    date,
-    projName,
-    projType,
-    billingType,
-    mrs,
-    proMonthlyGm,
-    yearlyGm,
-    time,
-    history: [
-      {
-        date: "2020-01-05",
-        customerId: "11091700",
-        amount: 3,
-      },
-      {
-        date: "2020-01-02",
-        customerId: "Anonymous",
-        amount: 1,
-      },
-    ],
-  };
-}
-const rows1 = [
-  createDatarow1(
-    "Delivery Resources",
-    "Anil Kumar Chauhan",
-    12345678,
-    "aman@successive.tech",
-    "Noida",
-    "Akshay Chauhan",
-    "01-01-2023",
-    "Dentsu",
-    "Managed Services(Hourly)",
-    "Bilable",
-    "red",
-    "12%",
-    "20%",
-    "8 Hours"
-  ),
-  createDatarow1(
-    "Delivery Resources",
-    "Anil Kumar Chauhan",
-    123456,
-    "aman@successive.tech",
-    "Noida",
-    "Akshay Chauhan",
-    "01-01-2023",
-    "Dentsu1",
-    "Managed Services(Hourly)",
-    "Bilable",
-    "green",
-    "25%",
-    "20%",
-    "8 Hours"
-  ),
-  createDatarow1(
-    "Delivery Resources",
-    "Aman",
-    123458,
-    "aman@successive.tech",
-    "Noida",
-    "Akshay Chauhan",
-    "01-01-2023",
-    "PMO",
-    "Managed Services(Hourly)",
-    "Bilable",
-    "Darkorange",
-    "22%",
-    "20%",
-    "8 Hours"
-  ),
-  createDatarow1(
-    "Delivery Resources",
-    "Aman",
-    1234345,
-    "rajat@successive.tech",
-    "Pune",
-    "Akshay Chauhan",
-    "01-01-2023",
-    "PMO1",
-    "Managed Services(Hourly)",
-    "Bilable",
-    "red",
-    "98%",
-    "20%",
-    "8 Hours"
-  ),
-  createDatarow1(
-    "Delivery Resources",
-    "Rajat",
-    12,
-    "rajat@successive.tech",
-    "Pune",
-    "Akshay",
-    "11-01-2023",
-    "ABC",
-    "Managed",
-    "Bilable",
-    "red",
-    "2%",
-    "20%",
-    "8 Hours"
-  ),
-  createDatarow1(
-    "Operation Resources",
-    "Rajat",
-    12345678,
-    "satish@successive.tech",
-    "Noida",
-    "Akshay Chauhan",
-    "01-01-2023",
-    "Marketcube",
-    "Managed Services(Hourly)",
-    "Bilable",
-    "green",
-    "22%",
-    "20%",
-    "8 Hours"
-  ),
-  createDatarow1(
-    "Operation Resources",
-    "Rajat",
-    1234345,
-    "prashant@successive.tech",
-    "Pune",
-    "Akshay Chauhan",
-    "01-01-2023",
-    "Citizin",
-    "Managed Services(Hourly)",
-    "Bilable",
-    "Darkorange",
-    "20%",
-    "20%",
-    "8 Hours"
-  ),
-  createDatarow1(
-    "Vendor Resources(Delivery)",
-    "Ravi",
-    12345678,
-    "ravi@successive.tech",
-    "Noida",
-    "Akshay Chauhan",
-    "01-01-2023",
-    "Paya",
-    "Managed Services(Hourly)",
-    "Bilable",
-    "green",
-    "22%",
-    "20%",
-    "8 Hours"
-  ),
-  createDatarow1(
-    "Vendor Resources(Delivery)",
-    "Test",
-    1234345,
-    "sumit@successive.tech",
-    "Pune",
-    "Akshay Chauhan",
-    "01-01-2023",
-    "DMO",
-    "Managed Services(Hourly)",
-    "Bilable",
-    "green",
-    "22%",
-    "20%",
-    "8 Hours"
-  ),
-  createDatarow1(
-    "Vendor Resources(Operations)",
-    "Satish",
-    12345678,
-    "vishal@successive.tech",
-    "Noida",
-    "Akshay Chauhan",
-    "01-01-2023",
-    "RMO",
-    "Managed Services(Hourly)",
-    "Bilable",
-    "red",
-    "22%",
-    "20%",
-    "8 Hours"
-  ),
-  createDatarow1(
-    "Vendor Resources(Operations)",
-    "ABC",
-    1234345,
-    "pradeep@successive.tech",
-    "Pune",
-    "Akshay Chauhan",
-    "01-01-2023",
-    "PHP",
-    "Managed Services(Hourly)",
-    "Bilable",
-    "green",
-    "22%",
-    "20%",
-    "8 Hours"
-  ),
-];
-
-let projectRows = [];
-let updatedRow;
 
 function Row(props) {
   const { row, selectedBar, order, orderBy, handleRequestSort, stableSort, getComparator, pg, open, setOpen } = props;
-  const [set1, setSet1] = React.useState();
-  // console.log("new->>>>>>315", row.empName);
+  const { user_org_booking = [] } = row; 
+
   useEffect(()=>{
     setOpen(false);
   },[pg])
 
-  const handleClick = (value, name) => {
+  const handleClick = (value) => {
     setOpen((prev) => (value === prev ? '' : value));
-    setSet1(name);
   };
 
-  // console.log('line 372->>>>>>>>>>>>>', open)
-
-  // console.log('rows1->>>>>>>...338', stableSort(rows1, getComparator(order, orderBy)));
-  // console.log('row====> : ', row)
   return (
-    <React.Fragment>
+    <>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={(event) => handleClick(row.uuid, row.empName)}
+            onClick={(event) => handleClick(row.uuid)}
           >
             {open === row.uuid ? (
               <RemoveCircleIcon style={{ color: "2559C3" }} />
@@ -478,9 +126,8 @@ function Row(props) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {stableSort(updatedRow, getComparator(order, orderBy)).map(
+                {stableSort(user_org_booking, getComparator(order, orderBy)).map(
                   (row) =>
-                    set1 === row.name ? (
                       <TableRow
                         // key={row.name}
                         sx={{
@@ -488,97 +135,80 @@ function Row(props) {
                         }}
                       >
                         <TableCell component="th" scope="row">
-                          {row.projName}
+                          {row.org_project.project_name}
                         </TableCell>
-                        <TableCell align="right">{row.projType}</TableCell>
-                        <TableCell align="right">{row.billingType}</TableCell>
+                        <TableCell align="right">internal</TableCell>
+                        <TableCell align="right">{row.org_project.billing_type.name}</TableCell>
                         <TableCell align="right">
                           {" "}
                           <Chip
                             style={{
                               width: "50px",
                               height: "25px",
-                              backgroundColor: row.mrs,
+                              backgroundColor: 'red',
                             }}
                             color="primary"
                           />
                         </TableCell>
-                        <TableCell align="right">{row.proMonthlyGm}</TableCell>
+                        <TableCell align="right">{row.monthlyGm}</TableCell>
                         <TableCell align="right">{row.yearlyGm}</TableCell>
-                        <TableCell align="right">{row.time}</TableCell>
+                        <TableCell align="right">{row.hours_per_day}</TableCell>
                       </TableRow>
-                    ) : null
-                )}
+                    )
+                }
               </TableBody>
             </Box>
           </Collapse>
         </TableCell>
       </TableRow>
-    </React.Fragment>
+    </>
   );
 }
 
 export default function EmployeeTable(props) {
   
   const { selectedBar, handleCallback } = props;
-  const [apiData, setApiData] = React.useState();
-  const [order, setOrder] = React.useState();
-  const [orderBy, setOrderBy] = React.useState();
-  const [open, setOpen] = React.useState('');
-  const [pg, setpg] = React.useState(0);
-  const [rpg, setrpg] = React.useState(50);
+  const [apiData, setApiData] = useState([]);
+  const [order, setOrder] = useState();
+  const [orderBy, setOrderBy] = useState();
+  const [open, setOpen] = useState('');
+  const [pg, setpg] = useState(0);
+  const [rpg, setrpg] = useState(50);
+  const [allEmployessData, setAllEmployessData] = useState([]);
+  const [totalCount, setTotalCount] = useState();
   const [loading, setLoading] = useState(false);
 
   
-  let tokenStr = "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk3OWVkMTU1OTdhYjM1Zjc4MjljZTc0NDMwN2I3OTNiN2ViZWIyZjAiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiTWFuaXNoIERpeGl0IiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FHTm15eGFNdld5bnlPSzc1VWJ6WVNzODlpODRfenB4Ykk5TkpLQzhSUXBUPXM5Ni1jIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3Jlc291cmNlLWF2YWlhYmlsaXR5IiwiYXVkIjoicmVzb3VyY2UtYXZhaWFiaWxpdHkiLCJhdXRoX3RpbWUiOjE2ODAwNzM5NDIsInVzZXJfaWQiOiJMQ1k0UkVkRlhTWkYzTjlEbzlBQnFhMmo0S0IyIiwic3ViIjoiTENZNFJFZEZYU1pGM045RG85QUJxYTJqNEtCMiIsImlhdCI6MTY4MDA3Mzk0MiwiZXhwIjoxNjgwMDc3NTQyLCJlbWFpbCI6Im1hbmlzaC5kaXhpdEBzdWNjZXNzaXZlLnRlY2giLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjExODM5NzE5ODMxNTY2OTY2OTUwNyJdLCJlbWFpbCI6WyJtYW5pc2guZGl4aXRAc3VjY2Vzc2l2ZS50ZWNoIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9fQ.A4GXsRTaMVDP-NnqbUNqekKXiDUft5cV2Tglk0rgIjWtQE8rMtWXrU1wV75xDUJl-8kZVh1Ta2whvZO9KpB172LuOrsme9ITgzQriI0mAzGHcU3s9bg--HkU-MkXF34mTTmpvtlbsIGb1j7cxhkAEkIXatU_OmcfG4haJ4c_QA8JwjYOaTrId-Y8qhOvoeqPglZpMFTQF7qoAIey6_EEBTtmCjzMey_Wd0dMc5cf1PRmSaFUPlv2V3nZkOMgbbSDlPKkm8hse2jE9DpCze5hEhJwpraZcNh--I0slZEinLpFsiJwqs5IiXEZ3tUaCK6RcIcYycqk_5ICmZYfMLUFOg"
+  let tokenStr = "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk3OWVkMTU1OTdhYjM1Zjc4MjljZTc0NDMwN2I3OTNiN2ViZWIyZjAiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiTWFuaXNoIERpeGl0IiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FHTm15eGFNdld5bnlPSzc1VWJ6WVNzODlpODRfenB4Ykk5TkpLQzhSUXBUPXM5Ni1jIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3Jlc291cmNlLWF2YWlhYmlsaXR5IiwiYXVkIjoicmVzb3VyY2UtYXZhaWFiaWxpdHkiLCJhdXRoX3RpbWUiOjE2ODAwNzM5NDIsInVzZXJfaWQiOiJMQ1k0UkVkRlhTWkYzTjlEbzlBQnFhMmo0S0IyIiwic3ViIjoiTENZNFJFZEZYU1pGM045RG85QUJxYTJqNEtCMiIsImlhdCI6MTY4MDA4ODMyNiwiZXhwIjoxNjgwMDkxOTI2LCJlbWFpbCI6Im1hbmlzaC5kaXhpdEBzdWNjZXNzaXZlLnRlY2giLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjExODM5NzE5ODMxNTY2OTY2OTUwNyJdLCJlbWFpbCI6WyJtYW5pc2guZGl4aXRAc3VjY2Vzc2l2ZS50ZWNoIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9fQ.E5i8TDBwQSRjHSZGtpiBYeVJiKLdkTF0WUVPRa7hE1mL1o3udbO9VSA3r1csN-7kT3qoVlTz2aI2Z5Viv2FRXNMVtwasOsySK3fgmXvrMzneKYh5EbQFYZgEX5rPcbbN1AlJfISvvIscu1gSAc-eyKP4CBZ4mQ6dGvCzkLqqgj_bR2Hl2vXjV7F37znUoPD-hPksWX7GQHXZBwMNnmalogIaVVlTjjEdtw3Jymtev2-Wckgd2Lmqc_spIlOa_wOHLc_rHHo7EACscOY4w9dERMCw2cB_X305vryRry4zoSLX03Zc9dR6OP8oOJYh6tdfS9nNFoJizF7qpZqyUAFWUw"
   useEffect(() => {
       const baseURL = `https://dev.resource-api.writso.com/v1/get-employees-list?page=${pg+1}`;
       setLoading(true)
       axios.get(baseURL, { headers: {"Authorization" : tokenStr} }).then((response) => {
           setApiData(response.data.data.data);
+          setAllEmployessData(response.data.data)
           setLoading(false)
       });
-    }, [pg]);
+    }, [pg]); 
 
-    let apiRows = []; 
+    useEffect(()=>{
+      setTotalCount(allEmployessData.total);
+    }, [allEmployessData]);
   
-    apiData?.forEach((data) =>{
+    const formatedData = apiData?.map((data) =>{
       const { id: uuid, user_department: empDept, full_name: empName, mrs= 'green', monthlyGm, yearlyGm, location: empLocation, user_org_booking } = data;
-      // console.log('response->>>>>>>>>>>', data);
-      apiRows.push(createData(
+      return createData(
         uuid,
         empName,
         mrs,
         monthlyGm,
         yearlyGm,
         empDept,
-        empLocation
-      ));
-      // user_org_booking?.forEach((projectData) => {
-      //     const { org_project, monthlyGm: projectMonthlyGm, yearlyGm: projectYearlyGm, hours_per_day } = projectData;
-      //     projectRows.push(projectCreateDatarow(
-      //       empName,
-      //       org_project.project_name,
-      //       'Internal',
-      //       org_project.billing_type.name,
-      //       'red',
-      //       projectMonthlyGm,
-      //       projectYearlyGm,
-      //       hours_per_day
-      //     ));
-      //     });
+        empLocation,
+        user_org_booking
+      )
   });
 
-  const uniqueArray = projectRows.filter((value, index) => {
-    const _value = JSON.stringify(value);
-    return index === projectRows.findIndex(obj => {
-      return JSON.stringify(obj) === _value;
-    });
-  });
-  updatedRow = uniqueArray;
-
-  let aa2 = apiRows;
-  let newArray = aa2.filter(function (el) {
+  let newArray = formatedData?.filter(function (el) {
     if (selectedBar.green) {
       return el.mrs === "green";
     }
@@ -623,7 +253,6 @@ export default function EmployeeTable(props) {
 
   const handleRequestSort = (property) => {
     setOrderBy(property);
-    // console.log('propert-->>>>453', property, orderBy)
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
   };
@@ -640,7 +269,6 @@ export default function EmployeeTable(props) {
     return stabilizedThis.map((el) => el[0]);
   }
  
-  console.log('data->>>>>>>>>578', loading);
   if (loading) {
   return (
     <Box sx={{ display: 'flex' }}>
@@ -720,7 +348,7 @@ export default function EmployeeTable(props) {
                       open={open}
                     />
                   ))
-              : stableSort(apiRows, getComparator(order, orderBy))
+              : stableSort(formatedData, getComparator(order, orderBy))
                   .map((row) => (
                     <Row
                       // key={row.deptName}
@@ -742,7 +370,7 @@ export default function EmployeeTable(props) {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={500}
+        count={totalCount}
         rowsPerPage={rpg}
         page={pg}
         onPageChange={handleChangePage}
