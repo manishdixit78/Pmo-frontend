@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
 import Box from "@mui/material/Box";
+import CircularProgress from '@mui/material/CircularProgress';
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
@@ -20,7 +21,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import TablePagination from "@mui/material/TablePagination";
 
 function createData(
-  deptName,
+  uuid,
   empName,
   mrs,
   monthlyGm,
@@ -29,7 +30,7 @@ function createData(
   empLocation
 ) {
   return {
-    deptName,
+    uuid,
     empName,
     mrs,
     monthlyGm,
@@ -53,6 +54,7 @@ function createData(
 
 const rows = [
   createData(
+    '1',
     "Delivery Resources",
     "Aman",
     "green",
@@ -71,6 +73,7 @@ const rows = [
   //   "Pune"
   // ),
   createData(
+    "2",
     "Operation Resources",
     "Rajat",
     "red",
@@ -80,6 +83,7 @@ const rows = [
     "Noida"
   ),
   createData(
+    "3",
     "Vendor Resources(Delivery)",
     "Satish",
     "Darkorange",
@@ -89,6 +93,7 @@ const rows = [
     "Noida"
   ),
   createData(
+    "4",
     "Vendor Resources(Delivery)",
     "Test",
     "Darkorange",
@@ -116,6 +121,7 @@ const rows = [
   //   "Noida"
   // ),
   createData(
+    "5",
     "Vendor Resources(Operations)",
     "ABC",
     "green",
@@ -133,6 +139,27 @@ const rows = [
 //     createData('Vendor Resources(Operations)', 'Santosh', 'warning', '30%', '20%', 'Node', 'Noida'),
 //   ];
 
+function projectCreateDatarow(
+  name,
+  projName,
+  projType,
+  billingType,
+  mrs,
+  proMonthlyGm,
+  yearlyGm,
+  time
+) {
+  return {
+  name,
+  projName,
+  projType,
+  billingType,
+  mrs,
+  proMonthlyGm,
+  yearlyGm,
+  time
+  };
+}
 
 function createDatarow1(
   deptName,
@@ -182,7 +209,7 @@ function createDatarow1(
 const rows1 = [
   createDatarow1(
     "Delivery Resources",
-    "Aman",
+    "Anil Kumar Chauhan",
     12345678,
     "aman@successive.tech",
     "Noida",
@@ -198,7 +225,7 @@ const rows1 = [
   ),
   createDatarow1(
     "Delivery Resources",
-    "Aman",
+    "Anil Kumar Chauhan",
     123456,
     "aman@successive.tech",
     "Noida",
@@ -358,36 +385,26 @@ const rows1 = [
   ),
 ];
 
+let projectRows = [];
+let updatedRow;
+
 function Row(props) {
-  const { row, selectedBar, order, orderBy, handleRequestSort, stableSort, getComparator, pg } = props;
-  const [open, setOpen] = React.useState(false);
+  const { row, selectedBar, order, orderBy, handleRequestSort, stableSort, getComparator, pg, open, setOpen } = props;
   const [set1, setSet1] = React.useState();
-  const [selectedRow, setSelectedRow] = React.useState(null);
   // console.log("new->>>>>>315", row.empName);
   useEffect(()=>{
     setOpen(false);
   },[pg])
 
-  const handleClick = (name) => {
-    // console.log('data->>>>>>>>374', selectedRow, name);
-    // if (selectedRow === name) {
-    //   console.log("inside ---------------------------373")
-    //   setSelectedRow(null);
-    //   setOpen(false);
-    // } else {
-    //   console.log("inside else---------------------------377")
-    //   setSelectedRow(name);
-    //   setOpen(true);
-    // }
-    // console.log('line 372->>>>>>>>>>>>>', selectedRow, name)
-    setOpen(!open);
+  const handleClick = (value, name) => {
+    setOpen((prev) => (value === prev ? '' : value));
     setSet1(name);
-    // setOpen(!open);
   };
 
-  console.log('line 372->>>>>>>>>>>>>', selectedRow)
+  // console.log('line 372->>>>>>>>>>>>>', open)
 
   // console.log('rows1->>>>>>>...338', stableSort(rows1, getComparator(order, orderBy)));
+  // console.log('row====> : ', row)
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -395,9 +412,9 @@ function Row(props) {
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={(event) => handleClick(row.empName)}
+            onClick={(event) => handleClick(row.uuid, row.empName)}
           >
-            {open ? (
+            {open === row.uuid ? (
               <RemoveCircleIcon style={{ color: "2559C3" }} />
             ) : (
               <AddCircleIcon style={{ color: "2559C3" }} />
@@ -437,7 +454,7 @@ function Row(props) {
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse in={open === row.uuid} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <TableHead>
                 <TableRow>
@@ -461,7 +478,7 @@ function Row(props) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {stableSort(rows1, getComparator(order, orderBy)).map(
+                {stableSort(updatedRow, getComparator(order, orderBy)).map(
                   (row) =>
                     set1 === row.name ? (
                       <TableRow
@@ -502,10 +519,65 @@ function Row(props) {
 }
 
 export default function EmployeeTable(props) {
+  
   const { selectedBar, handleCallback } = props;
+  const [apiData, setApiData] = React.useState();
   const [order, setOrder] = React.useState();
   const [orderBy, setOrderBy] = React.useState();
-  let aa2 = rows;
+  const [open, setOpen] = React.useState('');
+  const [pg, setpg] = React.useState(0);
+  const [rpg, setrpg] = React.useState(50);
+  const [loading, setLoading] = useState(false);
+
+  
+  let tokenStr = "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk3OWVkMTU1OTdhYjM1Zjc4MjljZTc0NDMwN2I3OTNiN2ViZWIyZjAiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiTWFuaXNoIERpeGl0IiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FHTm15eGFNdld5bnlPSzc1VWJ6WVNzODlpODRfenB4Ykk5TkpLQzhSUXBUPXM5Ni1jIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3Jlc291cmNlLWF2YWlhYmlsaXR5IiwiYXVkIjoicmVzb3VyY2UtYXZhaWFiaWxpdHkiLCJhdXRoX3RpbWUiOjE2ODAwNzM5NDIsInVzZXJfaWQiOiJMQ1k0UkVkRlhTWkYzTjlEbzlBQnFhMmo0S0IyIiwic3ViIjoiTENZNFJFZEZYU1pGM045RG85QUJxYTJqNEtCMiIsImlhdCI6MTY4MDA3Mzk0MiwiZXhwIjoxNjgwMDc3NTQyLCJlbWFpbCI6Im1hbmlzaC5kaXhpdEBzdWNjZXNzaXZlLnRlY2giLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjExODM5NzE5ODMxNTY2OTY2OTUwNyJdLCJlbWFpbCI6WyJtYW5pc2guZGl4aXRAc3VjY2Vzc2l2ZS50ZWNoIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9fQ.A4GXsRTaMVDP-NnqbUNqekKXiDUft5cV2Tglk0rgIjWtQE8rMtWXrU1wV75xDUJl-8kZVh1Ta2whvZO9KpB172LuOrsme9ITgzQriI0mAzGHcU3s9bg--HkU-MkXF34mTTmpvtlbsIGb1j7cxhkAEkIXatU_OmcfG4haJ4c_QA8JwjYOaTrId-Y8qhOvoeqPglZpMFTQF7qoAIey6_EEBTtmCjzMey_Wd0dMc5cf1PRmSaFUPlv2V3nZkOMgbbSDlPKkm8hse2jE9DpCze5hEhJwpraZcNh--I0slZEinLpFsiJwqs5IiXEZ3tUaCK6RcIcYycqk_5ICmZYfMLUFOg"
+  useEffect(() => {
+      const baseURL = `https://dev.resource-api.writso.com/v1/get-employees-list?page=${pg+1}`;
+      setLoading(true)
+      axios.get(baseURL, { headers: {"Authorization" : tokenStr} }).then((response) => {
+          setApiData(response.data.data.data);
+          setLoading(false)
+      });
+    }, [pg]);
+
+    let apiRows = []; 
+  
+    apiData?.forEach((data) =>{
+      const { id: uuid, user_department: empDept, full_name: empName, mrs= 'green', monthlyGm, yearlyGm, location: empLocation, user_org_booking } = data;
+      // console.log('response->>>>>>>>>>>', data);
+      apiRows.push(createData(
+        uuid,
+        empName,
+        mrs,
+        monthlyGm,
+        yearlyGm,
+        empDept,
+        empLocation
+      ));
+      // user_org_booking?.forEach((projectData) => {
+      //     const { org_project, monthlyGm: projectMonthlyGm, yearlyGm: projectYearlyGm, hours_per_day } = projectData;
+      //     projectRows.push(projectCreateDatarow(
+      //       empName,
+      //       org_project.project_name,
+      //       'Internal',
+      //       org_project.billing_type.name,
+      //       'red',
+      //       projectMonthlyGm,
+      //       projectYearlyGm,
+      //       hours_per_day
+      //     ));
+      //     });
+  });
+
+  const uniqueArray = projectRows.filter((value, index) => {
+    const _value = JSON.stringify(value);
+    return index === projectRows.findIndex(obj => {
+      return JSON.stringify(obj) === _value;
+    });
+  });
+  updatedRow = uniqueArray;
+
+  let aa2 = apiRows;
   let newArray = aa2.filter(function (el) {
     if (selectedBar.green) {
       return el.mrs === "green";
@@ -517,12 +589,9 @@ export default function EmployeeTable(props) {
       return el.mrs === "red";
     }
   });
-  
   const isBarSelected = Object.values(selectedBar).some(
     (value) => value === true
   );
-  const [pg, setpg] = React.useState(0);
-  const [rpg, setrpg] = React.useState(3);
 
   const tableref = React.useRef(null);
 
@@ -571,6 +640,15 @@ export default function EmployeeTable(props) {
     return stabilizedThis.map((el) => el[0]);
   }
  
+  console.log('data->>>>>>>>>578', loading);
+  if (loading) {
+  return (
+    <Box sx={{ display: 'flex' }}>
+      <CircularProgress />
+    </Box>
+  );
+  }
+
   return (
     <>
         {/* <Button onClick={onDownload}>Export</Button> */}
@@ -638,10 +716,11 @@ export default function EmployeeTable(props) {
                       getComparator={getComparator}
                       stableSort={stableSort}
                       pg={pg}
+                      setOpen={setOpen}
+                      open={open}
                     />
                   ))
-              : stableSort(rows, getComparator(order, orderBy))
-                  .slice(pg * rpg, pg * rpg + rpg)
+              : stableSort(apiRows, getComparator(order, orderBy))
                   .map((row) => (
                     <Row
                       // key={row.deptName}
@@ -653,6 +732,8 @@ export default function EmployeeTable(props) {
                       getComparator={getComparator}
                       stableSort={stableSort}
                       pg={pg}
+                      setOpen={setOpen}
+                      open={open}
                     />
                   ))}
           </TableBody>
