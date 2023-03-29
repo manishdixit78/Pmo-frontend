@@ -18,6 +18,7 @@ import CardHeader from "@mui/material/CardHeader";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import TablePagination from "@mui/material/TablePagination";
+import { data } from "../mock"
 
 function createData(
   uuid,
@@ -184,14 +185,14 @@ export default function EmployeeTable(props) {
       const baseURL = `https://dev.resource-api.writso.com/v1/get-employees-list?page=${pg+1}`;
       setLoading(true)
       axios.get(baseURL, { headers: {"Authorization" : tokenStr} }).then((response) => {
-          setApiData(response.data.data.data);
+          setApiData(data);
           setAllEmployessData(response.data.data)
           setLoading(false)
       });
     }, [pg]); 
 
     useEffect(()=>{
-      setTotalCount(allEmployessData.total);
+      setTotalCount(data.length);
     }, [allEmployessData]);
   
     const formatedData = apiData?.map((data) =>{
