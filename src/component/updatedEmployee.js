@@ -18,6 +18,7 @@ import CardHeader from "@mui/material/CardHeader";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import TablePagination from "@mui/material/TablePagination";
+import tokenStr from "../config";
 
 function createData(
   uuid,
@@ -178,8 +179,6 @@ export default function EmployeeTable(props) {
   const [totalCount, setTotalCount] = useState();
   const [loading, setLoading] = useState(false);
 
-  
-  let tokenStr = "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk3OWVkMTU1OTdhYjM1Zjc4MjljZTc0NDMwN2I3OTNiN2ViZWIyZjAiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiTWFuaXNoIERpeGl0IiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FHTm15eGFNdld5bnlPSzc1VWJ6WVNzODlpODRfenB4Ykk5TkpLQzhSUXBUPXM5Ni1jIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3Jlc291cmNlLWF2YWlhYmlsaXR5IiwiYXVkIjoicmVzb3VyY2UtYXZhaWFiaWxpdHkiLCJhdXRoX3RpbWUiOjE2ODAwNzM5NDIsInVzZXJfaWQiOiJMQ1k0UkVkRlhTWkYzTjlEbzlBQnFhMmo0S0IyIiwic3ViIjoiTENZNFJFZEZYU1pGM045RG85QUJxYTJqNEtCMiIsImlhdCI6MTY4MDA4ODMyNiwiZXhwIjoxNjgwMDkxOTI2LCJlbWFpbCI6Im1hbmlzaC5kaXhpdEBzdWNjZXNzaXZlLnRlY2giLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjExODM5NzE5ODMxNTY2OTY2OTUwNyJdLCJlbWFpbCI6WyJtYW5pc2guZGl4aXRAc3VjY2Vzc2l2ZS50ZWNoIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9fQ.E5i8TDBwQSRjHSZGtpiBYeVJiKLdkTF0WUVPRa7hE1mL1o3udbO9VSA3r1csN-7kT3qoVlTz2aI2Z5Viv2FRXNMVtwasOsySK3fgmXvrMzneKYh5EbQFYZgEX5rPcbbN1AlJfISvvIscu1gSAc-eyKP4CBZ4mQ6dGvCzkLqqgj_bR2Hl2vXjV7F37znUoPD-hPksWX7GQHXZBwMNnmalogIaVVlTjjEdtw3Jymtev2-Wckgd2Lmqc_spIlOa_wOHLc_rHHo7EACscOY4w9dERMCw2cB_X305vryRry4zoSLX03Zc9dR6OP8oOJYh6tdfS9nNFoJizF7qpZqyUAFWUw"
   useEffect(() => {
       const baseURL = `https://dev.resource-api.writso.com/v1/get-employees-list?page=${pg+1}`;
       setLoading(true)

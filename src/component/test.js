@@ -19,7 +19,7 @@ ChartJs.register(
 
 const BarChart = (props) => {
     const { selectedBar, setSelectedBar } = props;
-  const labels = ["Jan", "Feb", "Mar"];
+  const labels = [500, 100, 200];
   const data = {
     labels: labels,
     datasets: [
